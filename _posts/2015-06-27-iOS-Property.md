@@ -1,7 +1,8 @@
 ---
 layout: post
-title: Property的修饰符
+title: Property的修饰符 weak 和 assign的区别
 ---
 
-weak assign的区别，什么时候使用weak，什么时候使用assign？
+##什么时候使用weak，什么时候使用assign？
+
 weak和assign都不会增加引用计数，但weak比assign多一个功能，weak会在此property释放的时候自动将其置为nil，所以对象需要置为weak（置为assign，如果property已经释放，然后向其发送消息，则可能导致崩溃，置为weak此时property已是nil，则不会崩溃），int bool之类的非对象数据则适合置为assign（这些数据不需要设为nil）
