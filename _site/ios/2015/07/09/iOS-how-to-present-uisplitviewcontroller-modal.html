@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Creeve Liu's Blog - iOS Development</title>
+    <meta name="description" content="My iOS Development Notes" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/">Home</a>
+        <a class="subscribe-button icon-feed" href="/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">如何以Modal方式弹出UISplitViewController</h1>
+            <section class="post-meta">                
+                <time class="post-date" datetime="2015-07-09">09 Jul 2015</time>
+                 
+                    on ios 
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://creeveliu.github.io/">
+                
+                    <span class="blog-title">Creeve Liu's Blog</span>
+                 
+            </a>
+        </header> -->
+        
+        <!-- <span class="post-meta">
+            <time datetime="2015-07-09">09 Jul 2015</time>
+             
+                on ios 
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">如何以Modal方式弹出UISplitViewController</h1> -->
+
+        <section class="post-content">
+            <p>开发中遇到这样一个问题，当用户点击某个按键的时候，需要弹出一个后台设置的页面，而这个页面，是使用UISplitViewController来构建的。关键的语句如下：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">TSSettingViewController *settingVC = [[TSVaultViewController alloc] init];
+[self presentViewController:settingVC animated:YES completion:nil];
+</code></pre></div>
+<p>实际运行的时候，iOS8下没有问题，能正常弹出页面，但是到了iOS7上，直接崩溃，提示以下错误：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Application tried to present a Split View Controllers modally
+</code></pre></div>
+<p>Google得知，苹果的<a href="https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewControllerCatalog/Chapters/SplitViewControllers.html">官方文档</a>有写：</p>
+
+<blockquote>
+<p>&quot;A split view controller must always be the root of any interface you create. In other words, you must always install the view from a UISplitViewController object as the root view of your application’s window.&quot;</p>
+</blockquote>
+
+<p>也就是说，UISplitViewController必须是应用的Window的Root View，之前以Modal方式直接弹出的方式是不对的（iOS8做了改进，不会崩溃，但官方的文档还是不推荐这样用）。</p>
+
+<p>由于应用要兼容iOS7，不得不找办法解决。</p>
+
+<p>一种解决的方法是改写TSSettingViewController，不再继承自UISplitViewController，但是这个方法工作量也比较大，基本就要重新构建原来的页面了。</p>
+
+<p>另一种方法是弹出一个普通的ViewController，这个ViewController的View是原来的UISplitViewController的view，这样的方式是可行的，但总感觉和苹果推荐的处理方法不符。</p>
+
+<p>第三种方法，既然UISplitViewController必须是应用的Window的Root View，那就在它弹出的时候让它成为Root View，弹回去的时候，设置回原来的Root View即可，这样的方式也是最符合苹果的推荐处理方式的。</p>
+
+<p>实际的解决方式并不复杂，我们需要将
+<code>
+[self presentViewController:settingVC animated:YES completion:nil];
+</code>
+进行替换，使得新的弹出方法即可以将settingVC以类似的动画效果弹出，也可以设置为Window的RootViewController。
+首先在TSSettingViewController.h中添加这个新的弹出方法，我们这里命名为：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">// in TSSettingViewController.h above @end
+- (void)presentAsRootViewController;
+</code></pre></div>
+<p>这个方法的实现语句是：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">// in TSSettingViewController.m above @end
+- (void)presentAsRootViewController {
+
+    UIWindow *window=[[[UIApplication sharedApplication] delegate] window]; //获取当前Window
+    _previousViewController=window.rootViewController;  //获取弹出前的ViewController
+
+    UIView *windowSnapShot = [window snapshotViewAfterScreenUpdates:YES];   //创建一个弹出前Window的截图，这是为了模拟Modal方式弹出页面的效果
+    window.rootViewController = self;
+
+    [window insertSubview:windowSnapShot atIndex:0];
+
+    CGRect dstFrame=self.view.frame;
+
+    CGSize offset=CGSizeApplyAffineTransform(CGSizeMake(0, 1), window.rootViewController.view.transform);
+    offset.width*=self.view.frame.size.width;
+    offset.height*=self.view.frame.size.height;
+    self.view.frame=CGRectOffset(self.view.frame, offset.width, offset.height); 
+    //模拟Modal方式弹出ViewController的动画效果
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+         usingSpringWithDamping:1.0
+          initialSpringVelocity:0.0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.view.frame=dstFrame;
+                     } completion:^(BOOL finished) {
+                         [windowSnapShot removeFromSuperview];
+                     }];
+}
+</code></pre></div>
+<p>然后将原先调用 <code>[self presentViewController:settingVC animated:YES completion:nil]</code>的地方改为<code>[settingVC presentAsRootViewController]</code>即可。</p>
+
+<p>最后，我们还要实现UISplitViewContrller的弹回方法，类似弹出方法：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">// in TSSettingViewController.m above @end
+- (void)returnToPreviousViewController {
+    if(_previousViewController) {
+
+        UIWindow *window=[[[UIApplication sharedApplication] delegate] window];
+
+        UIView *windowSnapShot = [window snapshotViewAfterScreenUpdates:YES];
+        window.rootViewController = _previousViewController;
+
+        [window addSubview:windowSnapShot];
+
+        CGSize offset=CGSizeApplyAffineTransform(CGSizeMake(0, 1), window.rootViewController.view.transform);
+        offset.width*=windowSnapShot.frame.size.width;
+        offset.height*=windowSnapShot.frame.size.height;
+
+        CGRect dstFrame=CGRectOffset(windowSnapShot.frame, offset.width, offset.height);
+
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+             usingSpringWithDamping:1.0
+              initialSpringVelocity:0.0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             windowSnapShot.frame=dstFrame;
+                         } completion:^(BOOL finished) {
+                             [windowSnapShot removeFromSuperview];
+                             _previousViewController=nil;
+                         }];
+    }
+}
+</code></pre></div>
+<p>然后替换掉原来的弹出语句就可以了。</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/" style="background-image: url(/assets/images/profile.png)">
+                    <span class="hidden">creeveliu's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> creeveliu </h4>
+                    <!-- Author Bio -->
+                    <p> 
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>                
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=如何以Modal方式弹出UISplitViewController&amp;url=http://yourblog-domain.com/ios/2015/07/09/iOS-how-to-present-uisplitviewcontroller-modal.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yourblog-domain.com/ios/2015/07/09/iOS-how-to-present-uisplitviewcontroller-modal.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yourblog-domain.com/ios/2015/07/09/iOS-how-to-present-uisplitviewcontroller-modal.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+            
+            <!-- Disqus comments -->
+            
+            
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/">Creeve Liu's Blog</a> &copy; 
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using 
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
+</html>
