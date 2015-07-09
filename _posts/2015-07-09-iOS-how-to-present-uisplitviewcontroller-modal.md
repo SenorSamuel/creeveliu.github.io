@@ -1,6 +1,8 @@
 ---
 layout: post
 title: 如何以Modal方式弹出UISplitViewController
+date:   2014-07-09 10:18:00
+categories: iOS
 ---
 
 开发中遇到这样一个问题，当用户点击某个按键的时候，需要弹出一个后台设置的页面，而这个页面，是使用UISplitViewController来构建的。关键的语句如下：

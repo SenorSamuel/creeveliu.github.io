@@ -1,42 +1,38 @@
-# brume
+# Kasper
 
-I am not a designer so I cannot impress you with breathtaking Jekyll themes, but brume is something that just came to my mind and I had to build it. It is a clean and simple theme, which has an index page that lists all your blog posts divided by year and an about page. brume uses redcarpet as the Markdown processor with strikethrough extension enabled by default (so you can use ~~ to strike out words).
+This is a port of Ghost's default theme [Casper](https://github.com/tryghost/casper) for Jekyll. 
+Feel free to fork, change, modify and re-use it.
 
-This is how the "Home" page looks like.
+## How to use it
 
-![Home](https://dl.dropboxusercontent.com/u/9924988/Screen%20Shot%202014-02-26%20at%2018.48.57.png)
+Simply clone this repository, and then run `jekyll serve` inside the directory.
 
-And this is a single post.
+Kasper theme includes:
 
-![Home](https://dl.dropboxusercontent.com/u/9924988/Screen%20Shot%202014-04-06%20at%2012.56.08.png)
+* Pagination
+* Rss
+* Google Analytics Tracking code
+* Code Syntax Highlight
+* Author's profile with picture
+* Disqus comments
 
-## Usage
+## Screenshots
 
-**Important:** The latest version of brume uses `site.baseurl` for links, therefore, if you want to put your site in a subdirectory, update the *_config.yml* file!
+![index page](https://raw.github.com/rosario/kasper/master/assets/images/kasper-theme-index.png)
+![post page](https://raw.github.com/rosario/kasper/master/assets/images/kasper-theme-post.png)
 
-- Download the ZIP file and extract it's contents.
-- Open *_config.yml* file and enter your site's URL and add additional configuration or update the existing one if needed.
-- Open *_data/brume.yml* file and fill in values for site name (site title), author (your name) and description (blog description). This file contains all the custom information about your page. You can access it using `site.data.brume` object.
-- Open *about/index.md* file and add information about you or your site. You can delete this file and directory if not needed.
-- Open *_data/links.yml* and add additional links or update the existing ones that you want to be displayed in the navigation menu.
-- If you don't want to use CC BY-NC 4.0 licence for the content, then you should change the footer text, which is located in *_layouts/default.html*.
-- Generate your site and be happy!
 
-### Jekyll < 2.0.0
+## Thanks 
+Most of the work has been already done by the Ghost team, I've just ported Casper to Jekyll. 
+I've also added few things specific to Jekyll and some minor style changes.
 
-I try to keep brume up to date with the newest Jekyll version. Jekyll 2.0.0 introduced a lot of changes (like a built in Sass support) that are not backward compatible, therefore I have created a separate branch `legacy` for those, who might be using an older Jekyll version. All the changes that I introduce in `master` will be ported to `legacy`.
+## Copyright & License
 
-## Theme customization
+Copyright (C) 2013 Ghost Foundation - Released under the MIT License.
 
-This theme has 4 predefined colors that can be used for links:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-- azul
-- ruby
-- amber
-- avocado
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-![Color Examples](https://dl.dropboxusercontent.com/u/9924988/colors_new.png)
-
-By default it uses *azure*, but if you want to select another one just change the second class of `container` div in *_layouts/default.html* to one of the provided names.
-
-Express your thoughts about brume on Twitter [@aigarsdz](http://twitter.com/aigarsdz), and help me make it better!
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

@@ -1,6 +1,8 @@
 ---
 layout: post
 title: Property的修饰符 weak 和 assign的区别
+date:   2015-06-27 10:18:00
+categories: iOS
 ---
 
 

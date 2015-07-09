@@ -1,13 +1,15 @@
+name: Creeve Liu's Blog
+description: iOS Development
+meta_description: "My iOS Development Notes"
+
 markdown: redcarpet
 highlighter: pygments
-permalink: /:title
+logo: false
+paginate: 15
+baseurl: /
+domain_name: 'http://yourblog-domain.com'
+google_analytics: 'UA-XXXXXXXX-X'
 
-url:
-baseurl:
-
-redcarpet:
-  extensions: [strikethrough, tables]
-
-sass:
-  sass_dir: public/css
-  style: :compressed
+# Details for the RSS feed generator
+url:            'http://creeveliu.github.io/'
+author:         'creeveliu'
