@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 如何以Modal方式弹出UISplitViewController
-date:   2014-07-09 10:18:00
+date:   2015-07-09 10:18:00
 categories: iOS
 ---
 
