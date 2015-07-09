@@ -75,7 +75,7 @@ Google得知，苹果的[官方文档](https://developer.apple.com/library/ios/d
 }
 ```
 
-然后将原先调用 `[self presentViewController:settingVC animated:YES completion:nil];`的地方改为`[settingVC presentAsRootViewController];`即可。
+然后将原先调用 `[self presentViewController:settingVC animated:YES completion:nil]`的地方改为`[settingVC presentAsRootViewController]`即可。
 
 最后，我们还要实现UISplitViewContrller的弹回方法，类似弹出方法：
 
