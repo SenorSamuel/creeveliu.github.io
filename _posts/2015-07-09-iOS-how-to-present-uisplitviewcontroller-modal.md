@@ -35,11 +35,14 @@ Google得知，苹果的[官方文档](https://developer.apple.com/library/ios/d
 ```
 进行替换，使得新的弹出方法即可以将settingVC以类似的动画效果弹出，也可以设置为Window的RootViewController。
 首先在TSSettingViewController.h中添加这个新的弹出方法，我们这里命名为：
+
 ```
 // in TSSettingViewController.h above @end
 - (void)presentAsRootViewController;
 ```
+
 这个方法的实现语句是：
+
 ```
 // in TSSettingViewController.m above @end
 - (void)presentAsRootViewController {
