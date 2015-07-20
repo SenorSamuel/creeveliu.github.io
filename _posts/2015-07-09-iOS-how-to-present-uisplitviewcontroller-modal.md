@@ -8,7 +8,7 @@ categories: iOS
 开发中遇到这样一个问题，当用户点击某个按键的时候，需要弹出一个后台设置的页面，而这个页面，是使用UISplitViewController来构建的。关键的语句如下：
 
 ```
-TSSettingViewController *settingVC = [[TSVaultViewController alloc] init];
+TSSettingViewController *settingVC = [[TSSettingViewController alloc] init];
 [self presentViewController:settingVC animated:YES completion:nil];
 ```
 
