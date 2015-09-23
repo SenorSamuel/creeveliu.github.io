@@ -51,6 +51,7 @@ readyForDisplay这个Property则是表示视频是否已经准备好开始播放
 
 ###videoGravity
 
+
 ```
 @property(copy) NSString *videoGravity
 ```
@@ -66,7 +67,7 @@ videoGravity属性是个可设置，读取的属性，功能是改变视频的�
 ###videoRect
 当前播放视频画面的bounds。只能读不可写。
 
-##AVPlayerLayer
+##AVPlayer
 
 负责显示的AVPlayerLayer提供的属性和接口并不多，视频播放的大部分功能都由AVPlayer提供。
 
