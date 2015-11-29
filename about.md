@@ -4,7 +4,7 @@ title: About me
 ---
 
 
-##尘世中一个小小iOS程序员
+####A simple iOS developer, motivated by heart
 
 本科学的电子工程，搞过单片机，ARM，搞过FPGA，最后一年还搞过模式识别，H.264运动估计算法，但一直没找到自己真正喜欢的方向。反而苹果的一场iPhone的发布会让我产生了开发iOS程序的念头。
 
@@ -14,7 +14,7 @@ title: About me
 
 [![ScreenShot](http://ww2.sinaimg.cn/large/dd869288jw1ewccnvi442j20sg0lc7bz.jpg)](http://youtu.be/U7fK5sQTP0c)
 
-此外，正在努力成为全栈工程师的路上，对Node.js，Express，Cheerio，Sinatra有一定了解，初步完成了这样一个小的Demo，其中后台是用Node.js+Express+MongoDB搭建，客户端暂时采用了苹果原生的播放器AVPlayerViewController。
+此外，正在努力成为全栈工程师的路上，对Node.js，Express，Cheerio，Sinatra有一定了解，初步完成了这样一套流媒体播放系统，包含了服务器端+客户端，其中后台是用Node.js+Express+MongoDB搭建，部署在Coding.net的Paas平台上（真的太好用了^_^）。
 
 ![all text](http://ww1.sinaimg.cn/large/dd869288jw1ewcdrb1rlog20l70g0e89.gif)
 
