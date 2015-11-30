@@ -12,7 +12,7 @@ title: About me
 
 14年参加工作，在国内一家和广电合作的IPTV公司从事iOS开发，主要的工作是视频客户端UVideo的iPad/iPhone版本的开发，由于广电的特殊性，开发的App都是和机顶盒一起投放到消费者手中，均未上架AppStore，当然，自己还是觉得UVideo的UX还是不错的。
 
-[![ScreenShot](http://ww2.sinaimg.cn/large/dd869288jw1ewccnvi442j20sg0lc7bz.jpg)](http://youtu.be/U7fK5sQTP0c)
+[![ScreenShot](http://ww2.sinaimg.cn/large/0060lm7Tgw1eyj0mzit07j30sg0lcdp9.jpg)](http://youtu.be/U7fK5sQTP0c)
 
 此外，正在努力成为全栈工程师的路上，对Node.js，Express，Cheerio，Sinatra有一定了解，完成了这样一套流媒体播放系统，包含了服务器端+客户端，其中后台是用Node.js + Express + MongoDB搭建，部署在Coding.net的Paas平台上（真的太好用了^_^）。
 
