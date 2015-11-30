@@ -14,7 +14,7 @@ title: About me
 
 [![ScreenShot](http://ww2.sinaimg.cn/large/dd869288jw1ewccnvi442j20sg0lc7bz.jpg)](http://youtu.be/U7fK5sQTP0c)
 
-此外，正在努力成为全栈工程师的路上，对Node.js，Express，Cheerio，Sinatra有一定了解，初步完成了这样一套流媒体播放系统，包含了服务器端+客户端，其中后台是用Node.js+Express+MongoDB搭建，部署在Coding.net的Paas平台上（真的太好用了^_^）。
+此外，正在努力成为全栈工程师的路上，对Node.js，Express，Cheerio，Sinatra有一定了解，完成了这样一套流媒体播放系统，包含了服务器端+客户端，其中后台是用Node.js + Express + MongoDB搭建，部署在Coding.net的Paas平台上（真的太好用了^_^）。
 
 ![all text](http://ww1.sinaimg.cn/large/dd869288jw1ewcdrb1rlog20l70g0e89.gif)
 
