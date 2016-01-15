@@ -20,6 +20,7 @@ categories: iOS Socket
 ####引入GCDAsyncSocket库
 
 这里使用CocoaPods，新建iPhone单页面工程（CLEchoServer）然后`pod init`进行初始化，并添加CocoaAsyncSocket库，Podfile代码如下：
+
 ```
 target 'CLEchoServer' do
 
@@ -124,7 +125,7 @@ if (![_requestSocket connectToHost:@"192.168.12.105" onPort:9688 error:&err])
     NSLog(@"发现新连接 %@:%hu",host, port);
     NSString *welcomeMsg = @"欢迎你连接本服务器\n";
     NSData *welcomeData = [welcomeMsg dataUsingEncoding:NSUTF8StringEncoding];
-	[newSocket writeData:welcomeData withTimeout:-1 0];
+	[newSocket writeData:welcomeData withTimeout:-1 tag:0];
 }
 ```
 
